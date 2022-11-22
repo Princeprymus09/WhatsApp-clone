@@ -2,7 +2,11 @@ import React from "react";
 import { Dialog, Box, Typography, List, ListItem, styled } from "@mui/material";
 import { qrCodeImage } from "../../constents/Data";
 import { GoogleLogin } from "@react-oauth/google";
-import {jwt_decode } from "jwt-decode"
+import  jwt_decode  from "jwt-decode";
+import { useContext } from "react";
+import { AccountContext } from "../../context/AccountProvider";
+// import Chatdialog from "../chat/Chatdialog";
+import { addUser } from "../../services/api";
 
 const dialogStyle = {
   height: "95%",
@@ -41,20 +45,23 @@ const StyledList = styled(List)`
   }
 `;
 
-const LoginDialog = () => {
+const LoginDialog = (res) => {
 
+  const {setAccount} = useContext(AccountContext);
 
-  const onLoginSuccesss = (res) => {
-    console.log(res);
+  const onLoginSuccesss = async(res) => {
+   let decode = jwt_decode(res.credential);
+   setAccount(decode);
+   await addUser(decode)
   };
 
   const onLoginError = (res) => {
-    console.log("login failed" , res);
+    console.log("login failed", res);
   };
 
   return (
     <>
-      <Dialog open={true} PaperProps={{ sx: dialogStyle }}>
+      <Dialog open={true} PaperProps={{ sx: dialogStyle }} hideBackdrop={true}>
         <Component>
           <Container>
             <Title>To use WhatsApp on your computer:</Title>
@@ -69,15 +76,16 @@ const LoginDialog = () => {
               </ListItem>
             </StyledList>
           </Container>
-          <Box style={{position:"relative"}}>
-            <Qrimg
-              src={qrCodeImage}
-              alt="qr code"
-              onSuccess={onLoginSuccesss}
-              onError={onLoginError}
-            />
-            <Box style={{ position: "absolute", top:"50%", transform:"translateX(50%)" }}>
-              <GoogleLogin />
+          <Box style={{ position: "relative" }}>
+            <Qrimg src={qrCodeImage} alt="qr code" />
+            <Box
+              style={{
+                position: "absolute",
+                top: "50%",
+                transform: "translateX(50%)",
+              }}
+            >
+              <GoogleLogin onSuccess={onLoginSuccesss} onError={onLoginError} />
             </Box>
           </Box>
         </Component>
