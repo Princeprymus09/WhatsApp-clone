@@ -5,6 +5,7 @@ export const AccountContext = createContext(null);
 
 const AccountProvider = ({children}) => {
   const [account, setAccount] = useState();
+  const [person, setPerson] = useState({});
 
   return (
     <>
@@ -12,6 +13,8 @@ const AccountProvider = ({children}) => {
         value={{
           account,
           setAccount,
+          person,
+          setPerson
         }}>
             {children}
 
