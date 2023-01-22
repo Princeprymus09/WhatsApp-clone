@@ -82,7 +82,7 @@ const LoginDialog = (res) => {
               style={{
                 position: "absolute",
                 top: "50%",
-                transform: "translateX(50%)",
+                transform: "translateX(28%)",
               }}
             >
               <GoogleLogin onSuccess={onLoginSuccesss} onError={onLoginError} />

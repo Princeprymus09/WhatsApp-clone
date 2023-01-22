@@ -6,6 +6,7 @@ import {uploadDataFile}  from "../../../services/api"
 
 
 
+
 const Container = styled(Box)`
 height:55px;
 background:#ededed;
@@ -34,7 +35,7 @@ font-size:14px;`;
 const Clipicon = styled(AttachFile)`
 transform:rotate(40deg)`
 
-const  Footer =({sendText, setValue , value , file , sendFile}) =>{
+const  Footer =({sendText, setValue , value , file , sendFile, setImage}) =>{
     
   useEffect(()=>{
     const getImage = async ()=>{
@@ -43,7 +44,9 @@ const  Footer =({sendText, setValue , value , file , sendFile}) =>{
             data.append("name" , file.name);
             data.append("file" , file);
 
-            await  uploadDataFile(data);
+             let response = await  uploadDataFile(data);
+             console.log(response);
+               setImage(response.data);
         }
     } 
 

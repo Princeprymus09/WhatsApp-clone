@@ -22,6 +22,7 @@ const dialogStyle = {
 
 const Component = styled(Box)`
   display: flex;
+  position: fixed;
 `;
 
 const LeftComponent = styled(Box)`
