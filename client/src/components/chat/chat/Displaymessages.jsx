@@ -47,7 +47,7 @@ const ImageMessage = ({ message }) => {
       {message?.text?.includes(".pdf") ? (
         <Box></Box>
       ) : (
-        <img src={message.text} alt={message.text} />
+        <img src={message.text} alt={message.text} style={{ maxWidth: "100%"}} />
       )}
     </>
   );
@@ -64,7 +64,7 @@ const TextMessage = ({ message }) => {
 
 const Displaymessages = ({ message }) => {
   const { account } = useContext(AccountContext);
-  console.log(message);
+  // console.log(message);
   return (
     <>
       {account.sub === message.senderId ? (
